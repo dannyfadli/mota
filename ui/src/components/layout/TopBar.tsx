@@ -1,12 +1,23 @@
 import React from "react";
+import { useCart } from "../../contexts/CartContext";
 
 export interface TopBarProps {
   isLoggedIn: boolean;
-  currentPage: "home" | "profile" | "auth";
+  currentPage:
+    | "auth"
+    | "home"
+    | "profile"
+    | "marketplace"
+    | "demo"
+    | "onboarding"
+    | "chat"
+    | "cart";
   onLoginClick: () => void;
   onRegisterClick: () => void;
   onProfileClick: () => void;
-  onHomeClick: () => void;        // ➕ tombol kembali ke home
+  onMarketplaceClick: () => void;
+  onCartClick: () => void;
+  onHomeClick: () => void;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
@@ -15,8 +26,12 @@ export const TopBar: React.FC<TopBarProps> = ({
   onLoginClick,
   onRegisterClick,
   onProfileClick,
+  onCartClick,
   onHomeClick,
 }) => {
+  const { cart } = useCart();     // ⭐ realtime
+  const cartCount = cart.length;  // ⭐ otomatis update ketika cart berubah
+
   return (
     <header className="flex items-center justify-between gap-6 border-b bg-white px-8 py-3">
       {/* Logo + title */}
@@ -27,7 +42,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             MoTa — Modern Tani
           </div>
           <div className="text-xs text-slate-500">
-            Platform terpadu: E-commerce, Chat, News &amp; Community
+            Platform terpadu: E-commerce, Chat, News & Community
           </div>
         </div>
       </div>
@@ -44,8 +59,12 @@ export const TopBar: React.FC<TopBarProps> = ({
 
       {/* Actions */}
       <div className="flex items-center gap-3">
-        <button className="rounded-full border border-slate-200 px-4 py-2 text-sm">
-          Keranjang (0)
+        <button
+          type="button"
+          className="rounded-full border border-slate-200 px-4 py-2 text-sm"
+          onClick={onCartClick}
+        >
+          Keranjang ({cartCount})
         </button>
 
         {!isLoggedIn ? (
