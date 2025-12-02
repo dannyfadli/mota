@@ -1,44 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { PostDetailModal } from "../post/PostDetailModal";
+import type { PostDetail } from "../../types/post";
+import { FollowersModal } from "../layout/FollowersModal";
+
+const backend = import.meta.env.VITE_API_URL;
 
 export const ProfilePage: React.FC = () => {
-  // buat dummy user dari localStorage kalau ada
-  let name = "Petani Modern";
-  let email = "petani@example.com";
+  const [posts, setPosts] = useState<PostDetail[]>([]);
+  const [selectedPost, setSelectedPost] = useState<PostDetail | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState<"followers" | "following">(
+    "followers"
+  );
 
-  try {
-    const stored = localStorage.getItem("user");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (parsed.name) name = parsed.name;
-      if (parsed.email) email = parsed.email;
-    }
-  } catch {
-    // hmph, biarin aja
-  }
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const name = user.name || "User";
+  const email = user.email || "";
 
-  const posts = new Array(12).fill(null);
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/get_posts.php?user_id=${user.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) setPosts(data.posts);
+      });
+  }, []);
 
   return (
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <section className="flex gap-8 pb-6 border-b border-slate-200">
-        {/* Avatar */}
-        <div className="flex flex-1 justify-center sm:justify-start">
-          <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-full bg-gradient-to-tr from-emerald-400 to-lime-400 p-[3px]">
-            <div className="h-full w-full rounded-full bg-emerald-50 flex items-center justify-center">
-              <span className="text-3xl font-semibold text-emerald-700">
-                {name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          </div>
+        <div className="w-[200px] h-[200px] rounded-full border border-b-black flex items-center justify-center">
+          <img
+            src="/Profil.png"
+            alt="MoTa Logo"
+            className="scale-[1.5] object-contain rounded-full"
+          />
         </div>
 
         {/* Info */}
-        <div className="flex-[2]">
+        <div className="flex-2">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 mb-3">
-            <span className="text-lg font-semibold text-slate-900">
-              {name}
-            </span>
+            <span className="text-lg font-semibold text-slate-900">{name}</span>
             <div className="flex gap-2 text-xs">
               <button className="rounded-lg border border-slate-300 px-4 py-1.5 text-xs font-medium">
                 Edit Profil
@@ -51,21 +53,33 @@ export const ProfilePage: React.FC = () => {
 
           <div className="mb-3 flex gap-6 text-sm">
             <span>
-              <span className="font-semibold">12</span> postingan
+              <span className="font-semibold">{posts.length}</span> postingan
             </span>
-            <span>
+
+            <button
+              className="hover:text-emerald-600"
+              onClick={() => {
+                setPopupType("followers");
+                setShowPopup(true);
+              }}
+            >
               <span className="font-semibold">340</span> pengikut
-            </span>
-            <span>
+            </button>
+
+            <button
+              className="hover:text-emerald-600"
+              onClick={() => {
+                setPopupType("following");
+                setShowPopup(true);
+              }}
+            >
               <span className="font-semibold">210</span> mengikuti
-            </span>
+            </button>
           </div>
 
           <div className="text-sm">
             <div className="font-semibold text-slate-900">Petani MoTa</div>
-            <div className="text-slate-600 text-xs sm:text-sm">
-              {email}
-            </div>
+            <div className="text-slate-600 text-xs sm:text-sm">{email}</div>
             <div className="mt-1 text-xs text-slate-600">
               Berbagi hasil panen, eksperimen irigasi, dan tips modern tani 🌱
             </div>
@@ -90,16 +104,42 @@ export const ProfilePage: React.FC = () => {
       </section>
 
       {/* Grid posts */}
-      <section className="grid grid-cols-3 gap-[2px] sm:gap-1 mt-1 bg-slate-100">
-        {posts.map((_, idx) => (
-          <div
-            key={idx}
-            className="aspect-square bg-slate-200 flex items-center justify-center text-[10px] text-slate-500"
-          >
-            Post {idx + 1}
-          </div>
-        ))}
+      <section className="grid grid-cols-3 gap-0.5 sm:gap-1 mt-1 bg-slate-100">
+        {posts.map((p) => {
+          const firstMedia = p.media?.[0];
+
+          return (
+            <div
+              key={p.id}
+              className="aspect-square bg-slate-200 flex items-center justify-center relative cursor-pointer"
+              onClick={() => setSelectedPost(p)}
+            >
+              {firstMedia ? (
+                <img
+                  src={`${backend}/${firstMedia.media_url}`}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="text-[10px] text-slate-500 p-2 text-center">
+                  {p.content}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </section>
+
+      {/* Modal */}
+      {selectedPost && (
+        <PostDetailModal
+          post={selectedPost}
+          onClose={() => setSelectedPost(null)}
+        />
+      )}
+      {showPopup && (
+        <FollowersModal type={popupType} onClose={() => setShowPopup(false)} />
+      )}
     </div>
   );
 };

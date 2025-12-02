@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { TopBar } from "./components/layout/TopBar";
 import { SideNav } from "./components/layout/SideNav";
 import { HomePage } from "./components/home/HomePage";
-// import { RightSidebar } from "./components/home/RightSidebar";
 import { AuthPage } from "./components/auth/AuthPage";
 import { ProfilePage } from "./components/profile/ProfilePage";
 import Marketplace from "./components/layout/Marketplace";
@@ -10,12 +9,16 @@ import ChatWidget from "./components/layout/ChatWidget";
 import { BrowserRouter } from "react-router-dom";
 import CartPage from "./components/layout/CartPage";
 import { CartProvider } from "./contexts/CartContext";
+import WeatherNotification from "./components/layout/WeatherNotification";
+import { PostingPage } from "./components/posting/PostingPage";
+import ChatBot from "./components/layout/ChatBot";
 
 export type AuthMode = "login" | "register";
 type Page =
   | "auth"
   | "home"
   | "profile"
+  | "posting"
   | "marketplace"
   | "demo"
   | "onboarding"
@@ -37,6 +40,8 @@ const App: React.FC = () => {
 
   const [authMode, setAuthMode] = useState<AuthMode>("login");
 
+  const [sideNavExpanded, setSideNavExpanded] = useState<boolean>(true);
+
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
     setCurrentPage("home");
@@ -54,8 +59,9 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
+      <WeatherNotification />
       <CartProvider>
-        <div className="min-h-screen bg-emerald-50 text-slate-900">
+        <div className="min-h-screen bg-linear-to-t from-white to-emerald-100 text-slate-900">
           {/* TOP BAR SELALU DI DALAM ROUTER */}
           <TopBar
             isLoggedIn={isLoggedIn}
@@ -79,18 +85,27 @@ const App: React.FC = () => {
               isLoggedIn={isLoggedIn}
               currentPage={currentPage}
               onLogout={handleLogout}
+              onHomeClick={() => setCurrentPage("home")}
               onDemoClick={() => setCurrentPage("demo")}
               onOnboardingClick={() => setCurrentPage("onboarding")}
               onChatBotClick={() => setCurrentPage("chat")}
               onMarketplaceClick={() => setCurrentPage("marketplace")}
-              
+              onPostingClick={() => setCurrentPage("posting")}
+              onExpandChange={setSideNavExpanded}
             />
 
-            <main className="flex-1 overflow-y-auto px-6 py-6">
-                {currentPage === "home" && <HomePage />}
-                {currentPage === "profile" && <ProfilePage />}
-                {currentPage === "marketplace" && <Marketplace />}
-                {currentPage === "cart" && <CartPage />}
+            <main
+              className={[
+                "flex-1 overflow-y-auto px-6 py-6 transition-all duration-300",
+                sideNavExpanded ? "pl-44" : "pl-20",
+              ].join(" ")}
+            >
+              {currentPage === "home" && <HomePage />}
+              {currentPage === "profile" && <ProfilePage />}
+              {currentPage === "posting" && <PostingPage />}
+              {currentPage === "marketplace" && <Marketplace />}
+              {currentPage === "cart" && <CartPage />}
+              {currentPage === "chat" && <ChatBot />}
             </main>
           </div>
 

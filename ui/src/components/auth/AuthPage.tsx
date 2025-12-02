@@ -63,7 +63,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
       <div className="w-full max-w-md rounded-3xl bg-white shadow-lg border border-emerald-100 p-6">
         {/* Logo mini */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="h-9 w-9 rounded-xl bg-emerald-500" />
+          <img src="/Profil.png" alt="MoTa Logo" className="h-10" />
           <div>
             <div className="font-semibold text-emerald-800">
               MoTa — Modern Tani

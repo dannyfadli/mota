@@ -3,8 +3,8 @@
 
 $host = 'localhost';
 $db   = 'mota';
-$user = 'root';      // default XAMPP
-$pass = '';          // default XAMPP biasanya kosong
+$user = 'root';
+$pass = '';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 

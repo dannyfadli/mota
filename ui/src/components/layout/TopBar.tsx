@@ -10,6 +10,7 @@ export interface TopBarProps {
     | "marketplace"
     | "demo"
     | "onboarding"
+    | "posting"
     | "chat"
     | "cart";
   onLoginClick: () => void;
@@ -33,10 +34,10 @@ export const TopBar: React.FC<TopBarProps> = ({
   const cartCount = cart.length;  // ⭐ otomatis update ketika cart berubah
 
   return (
-    <header className="flex items-center justify-between gap-6 border-b bg-white px-8 py-3">
+    <header className="flex items-center justify-between gap-6 border-b bg-white px-8 py-3 sticky top-0">
       {/* Logo + title */}
       <div className="flex items-center gap-3">
-        <div className="h-9 w-9 rounded-xl bg-emerald-500" />
+        <img src="/Profil.png" alt="MoTa Logo" className="h-10" />
         <div className="leading-tight">
           <div className="font-semibold text-emerald-800">
             MoTa — Modern Tani

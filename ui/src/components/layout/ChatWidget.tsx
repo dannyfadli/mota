@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { sendChatMessage } from "../../api/chatApi";
 import { MessageCircle, X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(true);
@@ -87,14 +89,27 @@ export default function ChatWidget() {
           {/* Messages */}
           <div className="p-3 h-80 overflow-y-auto space-y-3 bg-slate-50">
             {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.from === "user" ? "justify-end" : ""}`}>
+              <div
+                key={i}
+                className={`flex ${m.from === "user" ? "justify-end" : ""}`}
+              >
                 <div
                   className={`max-w-[70%] rounded-xl px-3 py-2 text-sm shadow 
-                    ${m.from === "user" ? "bg-emerald-500 text-white" : "bg-white border"}
-                  `}
+          ${m.from === "user" ? "bg-emerald-500 text-white" : "bg-white border"}
+        `}
                 >
-                  <div>{m.text}</div>
-                  <div className="text-[10px] text-slate-400 mt-1">{m.time}</div>
+                  <div
+                    className={`prose prose-sm max-w-none ${
+                      m.from === "user" ? "prose-invert" : ""
+                    }`}
+                  >
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {m.text}
+                    </ReactMarkdown>
+                  </div>
+                  <div className="text-[10px] text-slate-400 mt-1">
+                    {m.time}
+                  </div>
                 </div>
               </div>
             ))}

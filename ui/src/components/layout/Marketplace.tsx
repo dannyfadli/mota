@@ -14,7 +14,7 @@ type Product = {
 };
 
 export default function MarketplacePage() {
-  const { addToCart } = useCart(); // <-- PENTING!
+  const { addToCart } = useCart();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("Rekomendasi");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -158,32 +158,52 @@ export default function MarketplacePage() {
 const products: Product[] = [
   {
     id: 1,
-    name: "Pupuk kandang super A1",
-    seller: "SUPER DUPER",
-    price: 11500,
-    image: "https://via.placeholder.com/150",
+    name: "Pupuk Organik 10kg",
+    seller: "PT Agro",
+    price: 50000,
+    image: "https://lzd-img-global.slatic.net/g/p/24a9bb0c807fea48b50c55a257754ba5.jpg_720x720q80.jpg",
     best: true,
     promo: false,
-    rating: 5,
+    rating: 4.7,
   },
   {
     id: 2,
-    name: "Pupuk kandang kambing",
-    seller: "YA PUPUK",
-    price: 50000,
-    image: "https://via.placeholder.com/150",
-    best: false,
+    name: "Benih Bawang Merah",
+    seller: "Tani Jaya",
+    price: 25000,
+    image: "https://down-id.img.susercontent.com/file/sg-11134201-22100-yder043sfriv71",
+    best: true,
     promo: true,
-    rating: 4,
+    rating: 4.9,
   },
   {
     id: 3,
-    name: "Pupuk Organik F5",
-    seller: "TOP TEN",
-    price: 21500,
-    image: "https://via.placeholder.com/150",
+    name: "Alat Penyiram Otomatis",
+    seller: "SmartFarm",
+    price: 150000,
+    image: "https://down-id.img.susercontent.com/file/sg-11134201-7rfgo-m3h6magloizrbd",
     best: false,
     promo: false,
-    rating: 3,
+    rating: 4.5,
+  },
+  {
+    id: 4,
+    name: "Traktor",
+    seller: "SmartFarm",
+    price: 60000000,
+    image: "https://i.auto-bild.de/ir_img/1/2/3/7/6/7/2/Der-staerkste-Fendt-Traktor-hat-500-PS-1200x800-49789fb43d4fe6f3.jpg",
+    best: true,
+    promo: false,
+    rating: 4.5,
+  },
+  {
+    id: 5,
+    name: "Drone Pertanian",
+    seller: "SmartFarm",
+    price: 130000000,
+    image: "https://solusiklik.co.id/wp-content/uploads/2024/11/header.png",
+    best: false,
+    promo: true,
+    rating: 4.5,
   },
 ];
