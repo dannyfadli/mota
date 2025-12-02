@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Bell, X } from "lucide-react"; // ikon lonceng
+import { X } from "lucide-react"; // ikon lonceng
 
 export default function WeatherNotification() {
   const [status, setStatus] = useState<{

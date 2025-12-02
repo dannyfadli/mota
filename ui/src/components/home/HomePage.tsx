@@ -299,6 +299,10 @@ export const HomePage: React.FC = () => {
         </p>
       </section>
 
+      {weatherData && (
+        <hr></hr>
+      )}
+
       <section>
         <WeatherCard onWeatherLoaded={setWeatherData} />
       </section>
