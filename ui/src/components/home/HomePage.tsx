@@ -23,7 +23,8 @@ const products: Product[] = [
     name: "Pupuk Organik 10kg",
     seller: "PT Agro",
     price: 50000,
-    image: "https://lzd-img-global.slatic.net/g/p/24a9bb0c807fea48b50c55a257754ba5.jpg_720x720q80.jpg",
+    image:
+      "https://lzd-img-global.slatic.net/g/p/24a9bb0c807fea48b50c55a257754ba5.jpg_720x720q80.jpg",
     best: true,
     promo: false,
     rating: 4.7,
@@ -33,7 +34,8 @@ const products: Product[] = [
     name: "Benih Bawang Merah",
     seller: "Tani Jaya",
     price: 25000,
-    image: "https://down-id.img.susercontent.com/file/sg-11134201-22100-yder043sfriv71",
+    image:
+      "https://down-id.img.susercontent.com/file/sg-11134201-22100-yder043sfriv71",
     best: true,
     promo: true,
     rating: 4.9,
@@ -43,7 +45,8 @@ const products: Product[] = [
     name: "Alat Penyiram Otomatis",
     seller: "SmartFarm",
     price: 150000,
-    image: "https://down-id.img.susercontent.com/file/sg-11134201-7rfgo-m3h6magloizrbd",
+    image:
+      "https://down-id.img.susercontent.com/file/sg-11134201-7rfgo-m3h6magloizrbd",
     best: false,
     promo: false,
     rating: 4.5,
@@ -53,7 +56,8 @@ const products: Product[] = [
     name: "Traktor",
     seller: "SmartFarm",
     price: 60000000,
-    image: "https://i.auto-bild.de/ir_img/1/2/3/7/6/7/2/Der-staerkste-Fendt-Traktor-hat-500-PS-1200x800-49789fb43d4fe6f3.jpg",
+    image:
+      "https://i.auto-bild.de/ir_img/1/2/3/7/6/7/2/Der-staerkste-Fendt-Traktor-hat-500-PS-1200x800-49789fb43d4fe6f3.jpg",
     best: true,
     promo: false,
     rating: 4.5,
@@ -170,9 +174,11 @@ const VideoCard: React.FC = () => {
       </div>
 
       <div className="flex gap-3">
-        <button className="px-4 py-2 bg-emerald-500 text-white rounded-full">
-          Tonton
-        </button>
+        <a href="https://www.youtube.com/watch?v=Q-t6Za31m9U" target="_blank">
+          <button className="px-4 py-2 bg-emerald-500 text-white rounded-full">
+            Tonton
+          </button>
+        </a>
         <button className="px-4 py-2 border border-slate-300 rounded-full">
           Simpan
         </button>
@@ -202,9 +208,14 @@ const MapsCard: React.FC = () => {
       </div>
 
       <div className="flex gap-3">
-        <button className="px-4 py-2 bg-emerald-500 text-white rounded-full">
-          Buka Maps
-        </button>
+        <a
+          href="https://www.google.com/maps/d/u/0/embed?mid=19ib_KAyhHuZrQoatL7QojQIAgZngDGw"
+          target="_blank"
+        >
+          <button className="px-4 py-2 bg-emerald-500 text-white rounded-full">
+            Buka Maps
+          </button>
+        </a>
         <button className="px-4 py-2 border border-slate-300 rounded-full">
           Simpan
         </button>
@@ -299,9 +310,7 @@ export const HomePage: React.FC = () => {
         </p>
       </section>
 
-      {weatherData && (
-        <hr></hr>
-      )}
+      {weatherData && <hr></hr>}
 
       <section>
         <WeatherCard onWeatherLoaded={setWeatherData} />
