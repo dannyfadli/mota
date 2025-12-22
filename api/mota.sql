@@ -49,3 +49,19 @@ CREATE TABLE post_comments (
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+CREATE TABLE marketplace_items (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    
+    title VARCHAR(255) NOT NULL,       -- nama produk
+    description TEXT,                  -- deskripsi produk
+    price INT NOT NULL,                -- harga
+    stock INT DEFAULT 1,               -- stok tersedia
+    image_url VARCHAR(255) NULL,       -- gambar utama
+    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

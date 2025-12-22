@@ -11,10 +11,10 @@ if (!$userMessage) {
     exit;
 }
 
-$apiKey = "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";
+$apiKey = "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";
 
 $payload = [
-    "model" => "google/gemma-3-27b-it:free",
+    "model" => "openai/gpt-oss-20b:free",
     "messages" => [
         ["role" => "system", "content" => "Kamu adalah MoTa, asisten ramah."],
         ["role" => "user", "content" => $userMessage]
